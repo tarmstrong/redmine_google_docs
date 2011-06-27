@@ -1,3 +1,7 @@
 = Redmine Google Spreadsheet Plugin
 
 This is a plugin for Redmine that allows you to embed Google Spreadsheets into redmine pages. This is useful for keeping spreadsheet-based documentation up-to-date with the issue queue. 
+
+== Notes
+
+Please do not use this on a public Redmine instance. This plugin does _absolutely no safety checks_, and will allow users to inject any Javascript on a page. Use with extreme caution.
