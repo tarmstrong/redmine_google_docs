@@ -49,11 +49,16 @@ Or we can use the googleissue macro, which automatically does this on issue page
 
 ![Google Spreadsheet Integration](http://evolvingweb.ca/sites/default/files/styles/large/public/googdoc-redmine%20embed.png)
 
-This plugin is available [here][gsplugin].
+Get this plugin [here][gsplugin].
 
 ## Final Words
 
 Keeping a team agile involves constant communication. We find these Redmine plugins invaluable for keeping management and development on the same page &mdash; literally. We hope you have similar success with this method.
+
+## Links
+
+* [Wiki Extensions Plugin][wiki_exts].
+* [Google Spreadsheet Plugin][gsplugin].
 
 [redminepost]: http://evolvingweb.ca/story/agile-project-management-google-docs-git-and-redmine
 [wiki_exts]: http://www.r-labs.org/projects/r-labs/wiki/Wiki_Extensions_en
