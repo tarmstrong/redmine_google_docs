@@ -48,7 +48,7 @@
 <p>Once you have the document key, you can write a macro that will include the spreadsheet in Redmine. For example:</p>
 
 <pre><code>
-{{googlespreadsheet(0ApF8ewDeRUY8dGxxTzdqWmdWSTNXNDdwZU44My13N0E)}}
+{{googless(0ApF8ewDeRUY8dGxxTzdqWmdWSTNXNDdwZU44My13N0E)}}
 </code>
 </pre>
 
@@ -59,7 +59,7 @@
 <p>Another common task is to filter the displayed rows. We can do this with our macro:</p>
 
 <pre><code>
-{{googlespreadsheet(286755fad04869ca523320acce0dc6a4, SELECT * WHERE A='Tavish')}}
+{{googless(286755fad04869ca523320acce0dc6a4, SELECT * WHERE A='Tavish')}}
 </code>
 </pre>
 
@@ -68,7 +68,7 @@
 <p>We often set up our spreadsheets with the second column as the related issue number. We can query for a specific issue number like this:</p>
 
 <pre><code>
-{{googlespreadsheet(286755fad04869ca523320acce0dc6a4, SELECT * WHERE B='5790')}}
+{{googless(286755fad04869ca523320acce0dc6a4, SELECT * WHERE B='5790')}}
 </code>
 </pre>
 

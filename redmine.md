@@ -27,7 +27,7 @@ The simplest version of this macro a document key as its first argument. A docum
 
 Once you have the document key, you can write a macro that will include the spreadsheet in Redmine. For example:
 
-    {{googlespreadsheet(0ApF8ewDeRUY8dGxxTzdqWmdWSTNXNDdwZU44My13N0E)}}
+    {{googless(0ApF8ewDeRUY8dGxxTzdqWmdWSTNXNDdwZU44My13N0E)}}
 
 Here it is in action:
 
@@ -35,13 +35,13 @@ Here it is in action:
 
 Another common task is to filter the displayed rows. We can do this with our macro:
 
-    {{googlespreadsheet(286755fad04869ca523320acce0dc6a4, SELECT * WHERE A='Tavish')}}
+    {{googless(286755fad04869ca523320acce0dc6a4, SELECT * WHERE A='Tavish')}}
 
 ![Google Spreadsheet Select Tavish](gs_embedded_tavish_mod.png)
 
 We often set up our spreadsheets with the second column as the related issue number. We can query for a specific issue number like this:
 
-    {{googlespreadsheet(286755fad04869ca523320acce0dc6a4, SELECT * WHERE B='5790')}}
+    {{googless(286755fad04869ca523320acce0dc6a4, SELECT * WHERE B='5790')}}
 
 Or we can use the googleissue macro, which automatically does this on issue pages.
 
