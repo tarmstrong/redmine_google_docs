@@ -19,6 +19,11 @@ Redmine::Plugin.register :redmine_googlesss do
       out = GoogleSpreadsheetMacros.googless_macro(obj, args)
     end
 
+    desc = "Redmine Google Spreadsheet Macro (googlespreadsheet)"
+    macro :googlespreadsheet do |obj, args|
+      out = GoogleSpreadsheetMacros.googless_macro(obj, args)
+    end
+
     desc = "Redmine Google Spreadsheet Macro (googlespread)"
     macro :googlespread do |obj, args|
       out = GoogleSpreadsheetMacros.googless_macro(obj, args)
