@@ -67,7 +67,11 @@ class GoogleSpreadsheetMacros
     function handleQueryResponse(response) {
       var errorMessage, fullErrorMessage, rawTable, table;
       if (response.isError()) {
-        errorMessage = response.nb[0].detailed_message;
+        try {
+          errorMessage = response.nb[0].detailed_message;
+        } catch (err) {
+          errorMessage = response.mb[0].detailed_message;
+        }
         fullErrorMessage = '<div class="flash error"><strong>' +
                            'Google Spreadsheet Error: ' +
                            errorMessage +
