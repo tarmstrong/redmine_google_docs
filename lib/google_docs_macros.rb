@@ -138,6 +138,17 @@ EOF
       raise "You need to be on an issue page to use the <strong>googleissue</strong> macro."
     end
   end
+end
 
+class GoogleDocumentMacros
+  def self.get_doc(obj, args)
+    doc_key = args[0]
+    if /^\w+$/.match(doc_key)
+      url = "https://docs.google.com/a/evolvingweb.ca/document/pub?id=#{doc_key}"
+      out = "<iframe src='#{url}'></iframe>"
+    else
+      raise "The Google document key must be alphanumeric."
+    end
+  end
 end
 

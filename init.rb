@@ -1,11 +1,11 @@
 require 'redmine'
 
-require File.dirname(__FILE__) + '/lib/google_spreadsheet_macros.rb'
+require File.dirname(__FILE__) + '/lib/google_docs_macros.rb'
 
 Redmine::Plugin.register :redmine_googlesss do
-  name "Google Spreadsheet Plugin"
+  name "Google Docs Plugin"
   author 'Tavish Armstrong'
-  description 'Embed google spreadsheets in your redmine pages.'
+  description 'Embed Google Docs in your redmine pages.'
   version '0.0.2'
 
   Redmine::WikiFormatting::Macros.register do
@@ -32,6 +32,11 @@ Redmine::Plugin.register :redmine_googlesss do
     desc = "Redmine Google Spreadsheet Macro (googleissue)"
     macro :googleissue do |obj, args|
       GoogleSpreadsheetMacros.get_issue(obj, args)
+    end
+
+    desc = "Redmine Google Document Macro (googledoc)"
+    macro :googledoc do |obj, args|
+      GoogleDocumentMacros.get_doc(obj, args)
     end
   end
 end
