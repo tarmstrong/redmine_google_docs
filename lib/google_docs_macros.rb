@@ -17,9 +17,11 @@ class GoogleSpreadsheetMacros
 
     raise  "The correct usage is {{ googless(key,query) }}" unless args.length >= 1
     
-    #currently not sanitizing the key, to allow for specifying sheets, eg "pCQbetd-CptGXxxQIG7VFIQ&sheet=USA"
-    #redmine seemingly html-escapes all the wiki arguments, so we un-escape them
+    # currently not sanitizing the key, to allow for specifying sheets, eg "pCQbetd-CptGXxxQIG7VFIQ&sheet=USA"
+    # redmine seemingly html-escapes all the wiki arguments, so we un-escape them
     key = CGI.unescapeHTML(args[0])
+
+
 
     if args.length >= 1
       # Queries can have commas in them, which the macro thinks are extra macro arguments.
@@ -27,7 +29,7 @@ class GoogleSpreadsheetMacros
       query = CGI.unescape(args[1..-1].join(",").to_s.sub('"', '\"'))
     end
     out = <<"EOF"
-  <div>
+<div>
   <style type="text/css">
   /* this is used to override the th and td className */
   /* see cssClassNames property in the invokation of table.draw() */
@@ -38,82 +40,44 @@ class GoogleSpreadsheetMacros
   <script type="text/javascript" src="https://www.google.com/jsapi"></script> 
   <script type="text/javascript"> 
   (function () {
-    var prot, isFirstTime, options, data, queryInput, querytable_id,
-        table_id, display_query_id, fakeSql, nohead, key, lock;
+    var prot, options, tableId, fakeSql, key;
 
     prot = (("https:" == document.location.protocol) ? "https://" : "http://");
-    isFirstTime = true;
-    options = {'showRowNumber': true};
-    data;
-    queryInput;
-    querytable_id = 'querytable-' + "#{dom_id}";
-    table_id = 'table-' + "#{dom_id}";
-    display_query_id = 'display-query-' + "#{dom_id}";
+    // Formatting options
+    options = {
+      showRowNumber: true,
+      cssClassNames: {
+        tableCell: 'small-font',
+        headerCell: 'small-font'
+      }
+    };
+  	// We want this to be unique for each embedded sheet. Otherwise only one sheet can display per page.
+    tableId = 'table-' + "#{dom_id}";
     fakeSql = "#{query}";
-    nohead = #{nohead};
     key = '#{key}';
-    
-    function sendAndDraw() {
-      // Send the query with a callback function.
-      google.load('visualization', '1', {packages: ['table'], 'callback': function () {
-        var query = new google.visualization.Query(prot + 'spreadsheets.google.com/tq?key='+key);
-        if(fakeSql) {
-          query.setQuery(fakeSql);
-        }
-        query.send(handleQueryResponse);
-      }});
-    }
-    
-    function handleQueryResponse(response) {
-      var errorMessage, fullErrorMessage, rawTable, table;
-      if (response.isError()) {
-        try {
-          errorMessage = response.nb[0].detailed_message;
-        } catch (err) {
-          errorMessage = response.mb[0].detailed_message;
-        }
-        fullErrorMessage = '<div class="flash error"><strong>' +
-                           'Google Spreadsheet Error: ' +
-                           errorMessage +
-                           '</strong></div>';
 
-        $('table-#{dom_id}').replace(fullErrorMessage);
-        return;
-      }
-      data = response.getDataTable();
-      rawTable = $(table_id);
-      table = new google.visualization.Table(rawTable);  
-      table.draw(data, {
-        'showRowNumber': true,
-        cssClassNames: {
-          tableCell: 'small-font',
-          headerCell: 'small-font'
-        }
-      });
-      rawTable.setStyle({
-        'overflow-x': 'hidden',
-        'overflow-y': 'hidden',
-        'display': 'inline-block'
+
+    google.load('visualization', '1.s');
+    
+    function drawVisualization() {
+      google.visualization.drawChart({
+        "containerId": tableId,
+        "dataSourceUrl": prot + 'spreadsheets.google.com/tq?key=' + key,
+        "query": fakeSql,
+        "refreshInterval": 5,
+        "chartType": "Table",
+        "options": options
       });
     }
-    
-    lock = false;
-    setTimeout(function () {
-      if (lock === false) {
-        sendAndDraw();
-      }
-    }, 1000);
-    document.observe('dom:loaded', function () {
-      lock = true;
-      sendAndDraw();
-    });
+
+    google.setOnLoadCallback(drawVisualization);
+	        
   }());
-  </script> 
-
-  </div>
-  <div id='table-#{dom_id}'>
-  Loading Google Spreadsheet...
-  </div>
+  </script>
+</div>
+<div id='table-#{dom_id}'>
+Loading Google Spreadsheet...
+</div>
 EOF
   end
   
@@ -149,10 +113,9 @@ class GoogleDocumentMacros
     doc_key = args[0]
     if /^\w+$/.match(doc_key)
       url = "https://docs.google.com/a/evolvingweb.ca/document/pub?id=#{doc_key}"
-      out = "<iframe src='#{url}'></iframe>"
+      out = "<iframe src='#{url}' width='800' height='400'></iframe>"
     else
       raise "The Google document key must be alphanumeric."
     end
   end
 end
-
