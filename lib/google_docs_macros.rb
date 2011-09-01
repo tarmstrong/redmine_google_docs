@@ -21,8 +21,6 @@ class GoogleSpreadsheetMacros
     # redmine seemingly html-escapes all the wiki arguments, so we un-escape them
     key = CGI.unescapeHTML(args[0])
 
-
-
     if args.length >= 1
       # Queries can have commas in them, which the macro thinks are extra macro arguments.
       # We know they're just commas in the query, so join them.
@@ -111,8 +109,17 @@ end
 class GoogleDocumentMacros
   def self.get_doc(obj, args)
     doc_key = args[0]
+    if args.length == 2
+      edit = (args[1].strip == "edit")
+    else
+      edit = false
+    end
     if /^\w+$/.match(doc_key)
-      url = "https://docs.google.com/a/evolvingweb.ca/document/pub?id=#{doc_key}"
+      if edit
+        url = "https://docs.google.com/a/evolvingweb.ca/document/edit?id=#{doc_key}"
+      else
+        url = "https://docs.google.com/a/evolvingweb.ca/document/pub?id=#{doc_key}"
+      end
       out = "<iframe src='#{url}' width='800' height='400'></iframe>"
     else
       raise "The Google document key must be alphanumeric."
