@@ -34,6 +34,9 @@ class GoogleSpreadsheetMacros
     .small-font {
       font-size:80%;
     }
+    .googlespreadsheet {
+      margin-right: 50px;
+    }
   </style>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script> 
   <script type="text/javascript"> 
@@ -73,7 +76,7 @@ class GoogleSpreadsheetMacros
   }());
   </script>
 </div>
-<div id='table-#{dom_id}'>
+<div class='googlespreadsheet' id='table-#{dom_id}'>
 Loading Google Spreadsheet...
 </div>
 EOF
