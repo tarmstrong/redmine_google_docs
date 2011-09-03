@@ -119,9 +119,9 @@ class GoogleDocumentMacros
     end
     if /^\w+$/.match(doc_key)
       if edit
-        url = "https://docs.google.com/a/evolvingweb.ca/document/edit?id=#{doc_key}"
+        url = "https://docs.google.com/document/d/#{doc_key}/edit"
       else
-        url = "https://docs.google.com/a/evolvingweb.ca/document/pub?id=#{doc_key}"
+        url = "https://docs.google.com/document/d/#{doc_key}"
       end
       out = "<iframe src='#{url}' width='800' height='400'></iframe>"
     else
