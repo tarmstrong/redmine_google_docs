@@ -117,7 +117,7 @@ class GoogleDocumentMacros
     else
       edit = false
     end
-    if /^\w+$/.match(doc_key)
+    if /^[\w-]+$/.match(doc_key)
       if edit
         url = "https://docs.google.com/document/d/#{doc_key}/edit"
       else
