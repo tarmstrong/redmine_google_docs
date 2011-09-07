@@ -1,7 +1,7 @@
 require 'redmine'
 require 'digest/md5'
 require 'yaml'
-
+include ActionView::Helpers::JavaScriptHelper
 
 class GoogleSpreadsheetMacros
   def self.googless_macro(googless_wiki_content, args, nohead=false)
@@ -19,12 +19,13 @@ class GoogleSpreadsheetMacros
     
     # currently not sanitizing the key, to allow for specifying sheets, eg "pCQbetd-CptGXxxQIG7VFIQ&sheet=USA"
     # redmine seemingly html-escapes all the wiki arguments, so we un-escape them
-    key = CGI.unescapeHTML(args[0])
+    key = escape_javascript(args[0])
 
     if args.length >= 1
       # Queries can have commas in them, which the macro thinks are extra macro arguments.
       # We know they're just commas in the query, so join them.
-      query = CGI.unescape(args[1..-1].join(",").to_s.sub('"', '\"'))
+      unescaped_query = args[1..-1].join(",").to_s.sub('"', '\"')
+      query = escape_javascript(unescaped_query)
     end
     out = <<"EOF"
 <div>
@@ -54,7 +55,7 @@ class GoogleSpreadsheetMacros
     };
   	// We want this to be unique for each embedded sheet. Otherwise only one sheet can display per page.
     tableId = 'table-' + "#{dom_id}";
-    fakeSql = "#{query}";
+    fakeSql = '#{query}';
     key = '#{key}';
 
 
