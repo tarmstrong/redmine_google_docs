@@ -17,15 +17,14 @@ class GoogleSpreadsheetMacros
 
     raise  "The correct usage is {{ googless(key,query) }}" unless args.length >= 1
     
-    # currently not sanitizing the key, to allow for specifying sheets, eg "pCQbetd-CptGXxxQIG7VFIQ&sheet=USA"
     # redmine seemingly html-escapes all the wiki arguments, so we un-escape them
-    key = escape_javascript(args[0])
+    key = escape_javascript(CGI.unescape(args[0]))
 
     if args.length >= 1
       # Queries can have commas in them, which the macro thinks are extra macro arguments.
       # We know they're just commas in the query, so join them.
       unescaped_query = args[1..-1].join(",").to_s.sub('"', '\"')
-      query = escape_javascript(unescaped_query)
+      query = escape_javascript(CGI.unescape(unescaped_query))
     end
     out = <<"EOF"
 <div>
