@@ -10,14 +10,26 @@ class GoogleSpreadsheetMacros
     # redmine seemingly html-escapes all the wiki arguments, so we un-escape them
     key = escape_javascript(CGI.unescape(args[0]))
 
-    if args.length >= 1
+
+    if args.length > 1
+      # check to see if the second argument is a sheet. Otherwise, continue
+      # assuming it's part of the query. @badidea
+      begin
+        possibly_sheet = args[1].to_s
+        sheet = Integer(possibly_sheet.strip()).to_s
+        querystart = 2
+      rescue ArgumentError
+        querystart = 1
+        sheet = "0"
+      end
+
       # Queries can have commas in them, which the macro thinks are extra macro arguments.
       # We know they're just commas in the query, so join them.
-      unescaped_query = args[1..-1].join(",").to_s.sub('"', '\"')
+      unescaped_query = args[querystart..-1].join(",").to_s.sub('"', '\"').strip()
       query = clean_key(unescaped_query)
     end
 
-    render_spreadsheet(key, query)
+    render_spreadsheet(key, query, sheet)
   end
 
   def self.render_spreadsheet(key, query, sheet="0", nohead=false)
