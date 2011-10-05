@@ -5,18 +5,8 @@ include ActionView::Helpers::JavaScriptHelper
 
 class GoogleSpreadsheetMacros
   def self.googless_macro(googless_wiki_content, args, nohead=false)
-    key = ""
-    query = ""
-
-    if nohead != "true"
-      nohead = "false";
-    end
-
-    # get a random string to add to the element IDs so multiple spreadsheets don't conflict.
-    dom_id = Digest::MD5.hexdigest(rand().to_s)
-
     raise  "The correct usage is {{ googless(key,query) }}" unless args.length >= 1
-    
+
     # redmine seemingly html-escapes all the wiki arguments, so we un-escape them
     key = escape_javascript(CGI.unescape(args[0]))
 
@@ -24,8 +14,23 @@ class GoogleSpreadsheetMacros
       # Queries can have commas in them, which the macro thinks are extra macro arguments.
       # We know they're just commas in the query, so join them.
       unescaped_query = args[1..-1].join(",").to_s.sub('"', '\"')
-      query = escape_javascript(CGI.unescape(unescaped_query))
+      query = clean_key(unescaped_query)
     end
+
+    render_spreadsheet(key, query)
+  end
+
+  def self.render_spreadsheet(key, query, sheet="0", nohead=false)
+
+    sheet = sheet.strip()
+
+    if nohead != "true"
+      nohead = "false";
+    end
+
+    # get a random string to add to the element IDs so multiple spreadsheets don't conflict.
+    dom_id = Digest::MD5.hexdigest(rand().to_s)
+    
     out = <<"EOF"
 <div>
   <style type="text/css">
@@ -63,7 +68,7 @@ class GoogleSpreadsheetMacros
     function drawVisualization() {
       google.visualization.drawChart({
         "containerId": tableId,
-        "dataSourceUrl": prot + 'spreadsheets.google.com/tq?key=' + key,
+        "dataSourceUrl": prot + 'spreadsheets.google.com/tq?gid=#{sheet}&key=' + key,
         "query": fakeSql,
         "refreshInterval": 5,
         "chartType": "Table",
@@ -81,13 +86,19 @@ Loading Google Spreadsheet...
 </div>
 EOF
   end
-  
+
   # a function for {{googleissue()}}
   def self.get_issue(obj, args)
     # usage: {{googleissue(adfSDFiuhDSF98SDFhiushdafbhIDFXF0dsf)}}
     # gives the row of the google spreadsheet containing the issue number in the second column
     goodargs = []
-    goodargs << args[0]
+    key = clean_key(args[0])
+    if args.length > 1
+      sheet = clean_key(args[1])
+    else
+      sheet = "0"
+    end
+
     if not obj.respond_to? :journalized_id or not obj.respond_to? :journalized_type
       if obj.is_a? Issue
         # we're in the "Description" part of the Issue page
@@ -101,11 +112,18 @@ EOF
       col = "B" #assuming second column
       issue_id = id
       issue_id_with_hash = "##{issue_id}"
-      goodargs << "SELECT * WHERE #{col}='#{issue_id}' OR #{col}=#{issue_id} OR #{col}='#{issue_id_with_hash}'"
-      out = googless_macro(obj, goodargs, "true")
+      query = "SELECT * WHERE #{col}='#{issue_id}' OR #{col}=#{issue_id} OR #{col}='#{issue_id_with_hash}'"
+
+      clean_query = clean_key(query)
+
+      out = render_spreadsheet(key, clean_query, sheet, "true")
     else
       raise "You need to be on an issue page to use the <strong>googleissue</strong> macro."
     end
+  end
+
+  def self.clean_key(key)
+    escape_javascript(CGI.unescape(key))
   end
 end
 
