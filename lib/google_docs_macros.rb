@@ -88,8 +88,27 @@ class GoogleSpreadsheetMacros
       });
     }
 
-    google.setOnLoadCallback(drawVisualization);
-	        
+   google.setOnLoadCallback(drawVisualization);
+	   console.log(tableId);
+    var addLink = function () {
+      var link = document.createElement('a');
+      link.innerText = "Go to entire spreadsheet.";
+      link.href = prot + 'spreadsheets.google.com/ccc?gid=#{sheet}&key=' + key;
+
+      var location = document.getElementById(tableId);
+      location.parentNode.appendChild(link);
+      console.log(link);
+      console.log(location);
+      };
+
+    var oldLoad = window.onload;
+    window.onload = function () {
+    if (typeof(oldLoad) === "function") {
+      oldLoad();
+      }
+      addLink();
+      };
+
   }());
   </script>
 </div>
