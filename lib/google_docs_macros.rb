@@ -89,16 +89,14 @@ class GoogleSpreadsheetMacros
     }
 
    google.setOnLoadCallback(drawVisualization);
-	   console.log(tableId);
+
     var addLink = function () {
       var link = document.createElement('a');
       link.innerText = "Go to entire spreadsheet.";
-      link.href = prot + 'spreadsheets.google.com/ccc?gid=#{sheet}&key=' + key;
+      link.href = prot + 'spreadsheets.google.com/ccc?key=' + key + '#' + 'gid=#{sheet}';
 
       var location = document.getElementById(tableId);
       location.parentNode.appendChild(link);
-      console.log(link);
-      console.log(location);
       };
 
     var oldLoad = window.onload;
