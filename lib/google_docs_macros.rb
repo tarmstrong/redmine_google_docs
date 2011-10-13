@@ -58,7 +58,7 @@ class GoogleSpreadsheetMacros
   <script type="text/javascript" src="https://www.google.com/jsapi"></script> 
   <script type="text/javascript"> 
   (function () {
-    var prot, options, tableId, fakeSql, key;
+    var prot, options, tableId, fakeSql, key, baseUrl;
 
     prot = (("https:" == document.location.protocol) ? "https://" : "http://");
     // Formatting options
@@ -74,13 +74,15 @@ class GoogleSpreadsheetMacros
     fakeSql = '#{query}';
     key = '#{key}';
 
+    // Spreadsheets.google.com went bad, why should this be stable?
+    baseUrl = 'docs.google.com/spreadsheet/';
 
     google.load('visualization', '1.s');
     
     function drawVisualization() {
       google.visualization.drawChart({
         "containerId": tableId,
-        "dataSourceUrl": prot + 'spreadsheets.google.com/tq?gid=#{sheet}&key=' + key,
+        "dataSourceUrl": prot + baseUrl + '/tq?gid=#{sheet}&key=' + key,
         "query": fakeSql,
         "refreshInterval": 5,
         "chartType": "Table",
@@ -93,7 +95,7 @@ class GoogleSpreadsheetMacros
     var addLink = function () {
       var link = document.createElement('a');
       link.innerText = "Go to entire spreadsheet.";
-      link.href = prot + 'spreadsheets.google.com/ccc?key=' + key + '#' + 'gid=#{sheet}';
+      link.href = prot + baseUrl + '/ccc?key=' + key + '#' + 'gid=#{sheet}';
 
       var location = document.getElementById(tableId);
       location.parentNode.appendChild(link);
