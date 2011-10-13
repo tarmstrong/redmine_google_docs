@@ -7,4 +7,4 @@ This is a plugin for Redmine that allows you to embed Google Spreadsheets and Do
 1. Extract/clone to the vendor/plugins folder of your Redmine installation.
 2. Enjoy
 
-The development of this module was sponsored by Evolving Web.
+The development of this module was sponsored by Evolving Web
