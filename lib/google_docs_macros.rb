@@ -75,7 +75,7 @@ class GoogleSpreadsheetMacros
     key = '#{key}';
 
     // Spreadsheets.google.com went bad, why should this be stable?
-    baseUrl = 'docs.google.com/spreadsheet/';
+    baseUrl = 'docs.google.com/spreadsheet';
 
     google.load('visualization', '1.s');
     
