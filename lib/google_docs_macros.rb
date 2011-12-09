@@ -11,6 +11,7 @@ class GoogleSpreadsheetMacros
     key = escape_javascript(CGI.unescape(args[0]))
 
 
+    sheet = "0"
     if args.length > 1
       # check to see if the second argument is a sheet. Otherwise, continue
       # assuming it's part of the query. @badidea
@@ -21,6 +22,8 @@ class GoogleSpreadsheetMacros
       rescue ArgumentError
         querystart = 1
         sheet = "0"
+      rescue
+        raise "Invalid sheet code"
       end
 
       # Queries can have commas in them, which the macro thinks are extra macro arguments.
@@ -34,6 +37,9 @@ class GoogleSpreadsheetMacros
 
   def self.render_spreadsheet(key, query, sheet="0", nohead=false)
 
+    if sheet.nil?
+      raise "Sheet is nil"
+    end
     sheet = sheet.strip()
 
     if nohead != "true"
@@ -75,7 +81,7 @@ class GoogleSpreadsheetMacros
     key = '#{key}';
 
     // Spreadsheets.google.com went bad, why should this be stable?
-    baseUrl = 'docs.google.com/spreadsheet/';
+    baseUrl = 'docs.google.com/spreadsheet';
 
     google.load('visualization', '1.s');
     
