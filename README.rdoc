@@ -1,5 +1,4 @@
-**The official Redmine Google Docs plugin has moved to Evolving Web's GitHub account.
-Please fork and clone from that repository instead.**
+= The official Redmine Google Docs plugin has moved to Evolving Web's GitHub account.  Please fork and clone from that repository instead.
 
 Link: https://github.com/evolvingweb/redmine_google_docs
 
