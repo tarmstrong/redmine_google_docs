@@ -164,6 +164,19 @@ EOF
   end
 end
 
+class GoogleSpreadsheetNativeMacros
+  def self.get_doc(obj, args)
+    doc_key = args[0]
+    if /^[\w-]+$/.match(doc_key)
+      url = "https://docs.google.com/spreadsheet/ccc?key=#{doc_key}"
+      out = "<iframe src='#{url}' width='100%' height='800' style='border: 0;'></iframe>"
+    else
+      raise "The Google spreadsheet key must be alphanumeric."
+    end
+  end
+end
+
+
 class GoogleDocumentMacros
   def self.get_doc(obj, args)
     doc_key = args[0]
@@ -178,7 +191,7 @@ class GoogleDocumentMacros
       else
         url = "https://docs.google.com/document/d/#{doc_key}"
       end
-      out = "<iframe src='#{url}' width='800' height='400'></iframe>"
+      out = "<iframe src='#{url}' width='100%' height='800'></iframe>"
     else
       raise "The Google document key must be alphanumeric."
     end

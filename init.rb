@@ -43,5 +43,10 @@ Redmine::Plugin.register :redmine_googlesss do
     macro :googledoc do |obj, args|
       GoogleDocumentMacros.get_doc(obj, args)
     end
+
+    desc = "Redmine Google Spreadsheet Native Macro (googlessn)"
+    macro :googlessn do |obj, args|
+      GoogleSpreadsheetNativeMacros.get_doc(obj, args)
+    end
   end
 end
