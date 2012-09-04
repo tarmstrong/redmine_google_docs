@@ -25,6 +25,10 @@ The development of this module was sponsored by Evolving Web.
 
 Where `key` is the document key (from the URI) and `query` is the (optional) SQL-like query to filter with.
 
+You can also specify a sheet with an optional third parameter.
+
+    {{googlespreadsheet(key, query, sheet)}}
+
 == Embed just the row containing the current issue's ID in the second column
 
 Given a spreadsheet like this:
