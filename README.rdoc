@@ -16,3 +16,45 @@ For more information, see our blog post on this module: http://evolvingweb.ca/st
 2. Enjoy
 
 The development of this module was sponsored by Evolving Web.
+
+= Usage
+
+== Embed a spreadsheet, filtering by a query
+
+    {{googlespreadsheet(key, query)}}
+
+Where `key` is the document key (from the URI) and `query` is the (optional) SQL-like query to filter with.
+
+== Embed just the row containing the current issue's ID in the second column
+
+Given a spreadsheet like this:
+
+    Source  | Issue ID  |  Description
+    --------+-----------+-----------------------------------------
+    Client  | 5678      | Change the colour of the banner to blue
+    QA Team | 6674      | Error message on search page
+    ...
+
+We can add the following macro to Issue 5678's description field:
+
+    {{googleissue(key)}}
+
+where `key` is the document key of the Google spreadsheet (from the URI).
+
+For example:
+
+    {{googleissue(adfSDFiuhDSF98SDFhiushdafbhIDFXF0dsf)}}
+
+== Embed a Google Doc (for Word-like documents)
+
+To embed an document in read-write mode:
+
+    {{googledoc(key, edit)}}
+
+To embed a document in read-only mode:
+
+    {{googledoc(key)}}
+
+== Embed a Native Google Spreadsheet (uses an iframe)
+
+   {{googlessn(key)}}
