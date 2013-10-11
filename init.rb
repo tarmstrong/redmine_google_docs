@@ -11,42 +11,42 @@ Redmine::Plugin.register :redmine_googlesss do
   Redmine::WikiFormatting::Macros.register do
     desc = "Redmine Google Spreadsheet Macro (gs)"
     macro :gs do |obj, args|
-      out = GoogleSpreadsheetMacros.googless_macro(obj, args)
+      out = GoogleSpreadsheetMacros.googless_macro(obj, args).html_safe
     end
 
     desc = "Redmine Google Spreadsheet Macro (googless)"
     macro :googless do |obj, args|
-      out = GoogleSpreadsheetMacros.googless_macro(obj, args)
+      out = GoogleSpreadsheetMacros.googless_macro(obj, args).html_safe
     end
 
     desc = "Redmine Google Spreadsheet Macro (googlespreadsheet)"
     macro :googlespreadsheet do |obj, args|
-      out = GoogleSpreadsheetMacros.googless_macro(obj, args)
+      out = GoogleSpreadsheetMacros.googless_macro(obj, args).html_safe
     end
 
     desc = "Redmine Google Spreadsheet Macro (googlespread)"
     macro :googlespread do |obj, args|
-      out = GoogleSpreadsheetMacros.googless_macro(obj, args)
+      out = GoogleSpreadsheetMacros.googless_macro(obj, args).html_safe
     end
 
     desc = "Redmine Google Spreadsheet Macro (gi)"
     macro :gi do |obj, args|
-      GoogleSpreadsheetMacros.get_issue(obj, args)
+      GoogleSpreadsheetMacros.get_issue(obj, args).html_safe
     end
 
     desc = "Redmine Google Spreadsheet Macro (googleissue)"
     macro :googleissue do |obj, args|
-      GoogleSpreadsheetMacros.get_issue(obj, args)
+      GoogleSpreadsheetMacros.get_issue(obj, args).html_safe
     end
 
     desc = "Redmine Google Document Macro (googledoc)"
     macro :googledoc do |obj, args|
-      GoogleDocumentMacros.get_doc(obj, args)
+      GoogleDocumentMacros.get_doc(obj, args).html_safe
     end
 
     desc = "Redmine Google Spreadsheet Native Macro (googlessn)"
     macro :googlessn do |obj, args|
-      GoogleSpreadsheetNativeMacros.get_doc(obj, args)
+      GoogleSpreadsheetNativeMacros.get_doc(obj, args).html_safe
     end
   end
 end
